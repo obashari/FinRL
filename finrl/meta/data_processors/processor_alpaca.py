@@ -48,6 +48,9 @@ class AlpacaProcessor:
 
         # from trepan.api import debug;debug()
         # filter opening time of the New York Stock Exchange (NYSE) (from 9:30 am to 4:00 pm) if time_interval < 1D
+        """
+        Wrong filter, doesn't take DST into account
+
         day_delta = 86400000000000  # pd.Timedelta('1D').delta == 86400000000000
         if pd.Timedelta(time_interval).delta < day_delta:
             NYSE_open_hour = "14:30"  # in UTC
@@ -55,6 +58,9 @@ class AlpacaProcessor:
             data_df = barset.between_time(NYSE_open_hour, NYSE_close_hour)
         else:
             data_df = barset
+        """
+        
+        data_df = barset
 
         # reformat to finrl expected schema
         data_df = data_df.reset_index().rename(columns={"symbol": "tic"})
